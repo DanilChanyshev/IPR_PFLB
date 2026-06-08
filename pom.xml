@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <selenium.version>4.44.0</selenium.version>
-        <jupiter.version>6.1.0</jupiter.version>
+        <jupiter.version>5.11.0</jupiter.version>
         <webdrivermanager.version>6.3.4</webdrivermanager.version>
         <guice.version>7.0.0</guice.version>
         <assertj-core.version>3.27.7</assertj-core.version>
@@ -23,6 +23,9 @@
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
         <checkstyle.plagin>3.3.1</checkstyle.plagin>
         <spotbugs.version>4.8.6.0</spotbugs.version>
+        <allure.version>2.29.0</allure.version>
+        <allure-maven.version>2.17.0</allure-maven.version>
+        <aspectj.version>1.9.21</aspectj.version>
 
         <base.url>https://mail.ru</base.url>
         <browser>chrome</browser>
@@ -54,6 +57,16 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj-core.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -72,9 +85,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
+                    <argLine>-javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</argLine>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                         <browser>${browser}</browser>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -109,6 +124,20 @@
                     <execution>
                         <goals>
                             <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven.version}</version>
+                <executions>
+                    <execution>
+                        <id>allure-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>

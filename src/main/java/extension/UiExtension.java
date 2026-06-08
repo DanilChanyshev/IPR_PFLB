@@ -15,7 +15,6 @@ public class UiExtension implements BeforeEachCallback, AfterEachCallback {
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
     driver = new WebDriverFactory().create();
-
     Guice.createInjector(new PagesModule(driver)).injectMembers(context.getTestInstance().get());
   }
 

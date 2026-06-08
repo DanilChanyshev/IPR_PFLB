@@ -4,18 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import annotations.Path;
 import annotations.UrlTemplate;
-import commons.AbsCommon;
+import commons.PageActions;
 import exceptions.PathNotFoundException;
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
-public abstract class AbsBasePage<T> extends AbsCommon {
+public abstract class AbsBasePage<T> extends PageActions {
 
   private String baseUrl = System.getProperty("base.url");
 
-  @FindBy(xpath = "//h1")
-  private WebElement header;
+  private final By header = By.xpath("//h1");
 
   public AbsBasePage(WebDriver driver) {
     super(driver);
@@ -43,20 +42,21 @@ public abstract class AbsBasePage<T> extends AbsCommon {
     return "";
   }
 
-  public T open() {
+  protected T open() {
     driver.get(baseUrl.concat(getPath()));
     return (T) this;
   }
 
-  public T open(String... data) {
+  protected T open(String... data) {
     driver.get(baseUrl.concat(getPathWithData(data)));
     return (T) this;
   }
 
-  public T checkHeaderPage(String header) {
-    assertThat(this.header.getText())
-            .as("Заголовок страницы не совпадает с ожидаемым")
-            .isEqualTo(header);
+  @Step("Проверить заголовок страницы")
+  public T checkHeaderPage(String title) {
+    assertThat(getText(header))
+            .isEqualTo(title)
+            .as("Заголовок страницы не совпадает с ожидаемым");
     return (T) this;
   }
 }
