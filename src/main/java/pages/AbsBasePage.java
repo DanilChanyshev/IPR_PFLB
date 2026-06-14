@@ -1,7 +1,5 @@
 package pages;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import annotations.Path;
 import annotations.UrlTemplate;
 import commons.PageActions;
@@ -10,11 +8,12 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public abstract class AbsBasePage<T> extends PageActions {
 
-  private String baseUrl = System.getProperty("base.url");
-
-  private final By header = By.xpath("//h1");
+  private static final By HEADER = By.xpath("//h1");
+  private final String baseUrl = System.getProperty("base.url");
 
   public AbsBasePage(WebDriver driver) {
     super(driver);
@@ -22,7 +21,7 @@ public abstract class AbsBasePage<T> extends PageActions {
 
   private String getPath() {
     Class<T> clazz = (Class<T>) this.getClass();
-    if(clazz.isAnnotationPresent(Path.class)) {
+    if (clazz.isAnnotationPresent(Path.class)) {
       Path pathObj = clazz.getDeclaredAnnotation(Path.class);
       return pathObj.value();
     }
@@ -31,10 +30,10 @@ public abstract class AbsBasePage<T> extends PageActions {
 
   private String getPathWithData(String... data) {
     Class<T> clazz = (Class<T>) this.getClass();
-    if(clazz.isAnnotationPresent(UrlTemplate.class)) {
+    if (clazz.isAnnotationPresent(UrlTemplate.class)) {
       UrlTemplate urlTemplate = clazz.getDeclaredAnnotation(UrlTemplate.class);
       String template = urlTemplate.value();
-      for (int i=0; i<data.length; i++) {
+      for (int i = 0; i < data.length; i++) {
         template = template.replace("{%d}".formatted(i + 1), data[i]);
       }
       return template;
@@ -54,9 +53,9 @@ public abstract class AbsBasePage<T> extends PageActions {
 
   @Step("Проверить заголовок страницы")
   public T checkHeaderPage(String title) {
-    assertThat(getText(header))
-            .isEqualTo(title)
-            .as("Заголовок страницы не совпадает с ожидаемым");
+    assertThat(getText(HEADER))
+            .as("Заголовок страницы не совпадает с ожидаемым")
+            .isEqualTo(title);
     return (T) this;
   }
 }

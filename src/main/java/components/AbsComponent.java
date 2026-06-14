@@ -1,9 +1,9 @@
 package components;
 
-import commons.AbsCommon;
+import commons.PageActions;
 import org.openqa.selenium.WebDriver;
 
-public abstract class AbsComponent extends AbsCommon {
+public abstract class AbsComponent extends PageActions {
 
   public AbsComponent(WebDriver driver) {
     super(driver);

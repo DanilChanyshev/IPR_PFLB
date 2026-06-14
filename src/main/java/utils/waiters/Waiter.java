@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class Waiter {
@@ -22,6 +23,20 @@ public class Waiter {
     this(driver, Duration.ofSeconds(10));
   }
 
+  public void sleep(int time) {
+    try {
+      Thread.sleep(time);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void presence(By locator, Duration time) {
+    new WebDriverWait(driver, time)
+            .until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+  }
+
   public WebElement visible(By locator) {
     try {
       return new WebDriverWait(driver, time)
@@ -30,6 +45,16 @@ public class Waiter {
       throw new AssertionError(
               "Элемент не виден на странице\n%s".formatted(e)
       );
+    }
+  }
+
+  public boolean isDisplayedWaiter(By locator) {
+    try {
+      new WebDriverWait(driver, Duration.ofSeconds(5))
+              .until(ExpectedConditions.visibilityOfElementLocated(locator));
+      return true;
+    } catch (TimeoutException e) {
+      return false;
     }
   }
 

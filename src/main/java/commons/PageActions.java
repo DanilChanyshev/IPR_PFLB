@@ -1,10 +1,15 @@
 package commons;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PageActions extends AbsCommon {
 
@@ -37,27 +42,53 @@ public class PageActions extends AbsCommon {
   }
 
   protected String getText(By selector) {
-    return visible(selector).getText();
+    String actualText = visible(selector).getText();
+    if (actualText != null && !actualText.isBlank()) {
+      return actualText;
+    } else {
+      return visible(selector).getAttribute("value");
+    }
+  }
+
+  protected WebElement shouldHaveClass(By selector, String value) {
+    WebElement element = visible(selector);
+    String cssValue = element.getAttribute("class");
+    assertThat(cssValue)
+            .as("Элемент, не содержит класс: %s".formatted(value))
+            .contains(value);
+    return element;
   }
 
   protected void sendKeys(By selector, String text) {
-    visible(selector).clear();
-    visible(selector).sendKeys(text);
+    WebElement element = isEnable(selector);
+    element.clear();
+    element.sendKeys(text);
     assertThat(getText(selector))
-            .isEqualTo(text)
-            .as("Поле не заполнилось или заполнилось не валидными данными");
+            .as("Поле не заполнилось или заполнилось не валидными данными")
+            .isEqualTo(text);
   }
 
   protected boolean isDisplayed(By selector) {
-    try {
-      visible(selector);
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
+    return waiter.isDisplayedWaiter(selector);
   }
 
   protected void switchToFrame(By selector) {
     driver.switchTo().frame(driver.findElement(selector));
+  }
+
+  protected void switchToDefaultFrame() {
+    driver.switchTo().defaultContent();
+  }
+
+  protected void switchToNextTab() {
+    Set<String> handles = driver.getWindowHandles();
+    ArrayList<String> tabs = new ArrayList<>(handles);
+    String thisTab = driver.getWindowHandle();
+    int startIndex = tabs.indexOf(thisTab);
+
+    new WebDriverWait(driver, Duration.ofSeconds(5))
+            .until(driver -> driver.getWindowHandles().size() > startIndex);
+
+    driver.switchTo().window(tabs.get(startIndex + 1));
   }
 }

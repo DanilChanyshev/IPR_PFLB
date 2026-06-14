@@ -2,6 +2,7 @@ package extension;
 
 import com.google.inject.Guice;
 import factory.WebDriverFactory;
+import modules.ComponentsModule;
 import modules.PagesModule;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -10,18 +11,21 @@ import org.openqa.selenium.WebDriver;
 
 public class UiExtension implements BeforeEachCallback, AfterEachCallback {
 
-  private WebDriver driver;
+  private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
   @Override
   public void beforeEach(ExtensionContext context) throws Exception {
-    driver = new WebDriverFactory().create();
-    Guice.createInjector(new PagesModule(driver)).injectMembers(context.getTestInstance().get());
+    WebDriver driver = new WebDriverFactory().create();
+    driverThreadLocal.set(driver);
+    Guice.createInjector(new PagesModule(driver), new ComponentsModule(driver)).injectMembers(context.getTestInstance().get());
   }
 
   @Override
   public void afterEach(ExtensionContext context) throws Exception {
+    WebDriver driver = driverThreadLocal.get();
     if (driver != null) {
       driver.quit();
+      driverThreadLocal.remove();
     }
   }
 }

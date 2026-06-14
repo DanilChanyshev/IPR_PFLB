@@ -5,15 +5,16 @@ import factory.settings.ChromeSettings;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
 import java.util.Locale;
 
 public class WebDriverFactory {
 
-  private String browser = System.getProperty("browser").toLowerCase(Locale.ROOT);
+  private final String browser = System.getProperty("browser").toLowerCase(Locale.ROOT);
 
   public WebDriver create() {
     switch (browser) {
-      case "chrome" : {
+      case "chrome": {
         return new ChromeDriver((ChromeOptions) new ChromeSettings().settings());
       }
     }
