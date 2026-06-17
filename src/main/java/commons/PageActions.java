@@ -1,5 +1,6 @@
 package commons;
 
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,12 @@ public class PageActions extends AbsCommon {
 
   public PageActions(WebDriver driver) {
     super(driver);
+  }
+
+  protected void checkTextElement(By element, String text) {
+    Assertions.assertThat(getText(element))
+            .as("Сообщение в элементе не соответствует ожидаемому")
+            .contains(text);
   }
 
   protected void click(By selector) {

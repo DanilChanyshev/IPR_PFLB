@@ -2,7 +2,7 @@ package pages;
 
 import annotations.Path;
 import io.qameta.allure.Step;
-import jakarta.inject.Inject;
+import com.google.inject.Inject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

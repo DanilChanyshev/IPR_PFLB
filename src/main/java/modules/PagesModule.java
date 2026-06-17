@@ -5,9 +5,12 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import org.openqa.selenium.WebDriver;
 import pages.AuthPage;
-import pages.MailInboxPage;
+import pages.DeletedMailPage;
+import pages.DraftsPage;
+import pages.InboxPage;
 import pages.MailPage;
 import pages.MainPage;
+import pages.SentPage;
 
 public class PagesModule extends AbstractModule {
 
@@ -32,8 +35,15 @@ public class PagesModule extends AbstractModule {
   }
 
   @Provides
-  public MailInboxPage getMailInboxPage(Injector injector) {
-    MailInboxPage page = new MailInboxPage(driver);
+  public InboxPage getInboxPage(Injector injector) {
+    InboxPage page = new InboxPage(driver);
+    injector.injectMembers(page);
+    return page;
+  }
+
+  @Provides
+  public SentPage getSentPage(Injector injector) {
+    SentPage page = new SentPage(driver);
     injector.injectMembers(page);
     return page;
   }
@@ -41,6 +51,20 @@ public class PagesModule extends AbstractModule {
   @Provides
   public MailPage getMailPage(Injector injector) {
     MailPage page = new MailPage(driver);
+    injector.injectMembers(page);
+    return page;
+  }
+
+  @Provides
+  public DeletedMailPage getDeletedMailPage(Injector injector) {
+    DeletedMailPage page = new DeletedMailPage(driver);
+    injector.injectMembers(page);
+    return page;
+  }
+
+  @Provides
+  public DraftsPage getDraftsPage(Injector injector) {
+    DraftsPage page = new DraftsPage(driver);
     injector.injectMembers(page);
     return page;
   }

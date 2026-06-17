@@ -1,18 +1,20 @@
 package models.mail;
 
+import enums.MailBox;
+
 public class Mail {
 
-  private final String to;
+  private final MailBox to;
   private final String subject;
   private final String mail;
 
-  public Mail(String to, String subject, String mail) {
+  public Mail(MailBox to, String subject, String mail) {
     this.to = to;
     this.subject = subject;
     this.mail = mail;
   }
 
-  public String getTo() {
+  public MailBox getTo() {
     return to;
   }
 

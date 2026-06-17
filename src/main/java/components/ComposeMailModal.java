@@ -1,11 +1,14 @@
 package components;
 
+import enums.MailBox;
 import io.qameta.allure.Step;
-import jakarta.inject.Inject;
 import models.mail.Mail;
+import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import pages.MailInboxPage;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,8 +23,10 @@ public class ComposeMailModal extends AbsComponent {
   private static final By BUTTON_CANCEL = By.xpath("//button[.//span[text() = 'Отменить']]");
   private static final By MESSAGE_SENDING_TEXT = By.xpath("//div[contains(@class, 'ayer_compose')]//a[text()]");
   private static final By MESSAGE_SENDING_CLOSE_BUTTON = By.xpath("//span[@title = 'Закрыть']");
+  private static final By SNACK_BAR_MESSAGE = By.xpath("//div[@class = 'vkuiSnackbar__content']//span[@data-qa-id = 'message']");
 
   private static final String SENDING_MESSAGE = "Отправлено — с подпиской письма можно возвращать";
+  private static final String MESSAGE_SAVE_DRAFT = "Сохранено в черновиках в %s";
 
   public ComposeMailModal(WebDriver driver) {
     super(driver);
@@ -55,10 +60,10 @@ public class ComposeMailModal extends AbsComponent {
   }
 
   @Step("Закрыть модальное окно о том, что сообщение отправлено")
-  public MailInboxPage closeModal() {
+  public ComposeMailModal closeModal() {
     click(MESSAGE_SENDING_CLOSE_BUTTON);
     waiter.sleep(3000);
-    return new MailInboxPage(driver).checkOpenPage();
+    return this;
   }
 
   @Step("Заполнить 'Письмо'")
@@ -70,8 +75,8 @@ public class ComposeMailModal extends AbsComponent {
   }
 
   @Step("Заполнить поле 'Кому'")
-  public ComposeMailModal sendToField(final String value) {
-    sendKeys(TO_INPUT, value);
+  public ComposeMailModal sendToField(final MailBox value) {
+    sendKeys(TO_INPUT, value.getEmail());
     return this;
   }
 
@@ -84,6 +89,14 @@ public class ComposeMailModal extends AbsComponent {
   @Step("Заполнить поле 'Содержание письма'")
   public ComposeMailModal sendTextBoxField(final String value) {
     sendKeys(TEXT_BOX, value);
+    return this;
+  }
+
+  @Step("Проверить, что появилось пуш уведомление о сохранении черновика")
+  public ComposeMailModal checkSnackBarMessage() {
+    Assertions.assertThat(getText(SNACK_BAR_MESSAGE))
+            .as("Пущ о сохранении черновика не соответствует ожидаемому")
+            .isEqualTo(MESSAGE_SAVE_DRAFT.formatted(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
     return this;
   }
 }

@@ -1,8 +1,9 @@
 package pages;
 
 import annotations.Path;
+import enums.MailBox;
 import io.qameta.allure.Step;
-import jakarta.inject.Inject;
+import com.google.inject.Inject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -38,8 +39,9 @@ public class AuthPage extends AbsBasePage<AuthPage> {
   private static final By ERROR_MESSAGE = By.xpath("//span[@data-test-id='error-message']");
   private static final By NOT_ROBOT_FRAME = By.xpath("//iframe[contains(@src, 'not_robot')]");
   private static final By ROBOT_CHECK_BOX = By.xpath("//label[contains(@class, 'vkc__Checkbox-module__Checkbox')]");
+
   @Inject
-  private MailInboxPage mailInboxPage;
+  private InboxPage inboxPage;
 
   public AuthPage(WebDriver driver) {
     super(driver);
@@ -89,9 +91,9 @@ public class AuthPage extends AbsBasePage<AuthPage> {
   }
 
   @Step("Заполнить поле 'Email'")
-  public AuthPage sendEmail(String email) {
+  public AuthPage sendEmail(MailBox email) {
     click(INPUT_EMAIL);
-    sendKeys(INPUT_EMAIL, email);
+    sendKeys(INPUT_EMAIL, email.getLogin());
     return this;
   }
 
@@ -106,10 +108,10 @@ public class AuthPage extends AbsBasePage<AuthPage> {
    */
 
   @Step("Проверить отображение заголовка 'Войти без пароля'")
-  public AuthPage checkTitleDontPass(String email) {
+  public AuthPage checkTitleDontPass(MailBox email) {
     assertThat(getText(By.xpath(TITLE.concat("//span"))))
             .as("Заголовок блока не соответсвует")
-            .isEqualTo(SIGN_IN_TO.formatted(email));
+            .isEqualTo(SIGN_IN_TO.formatted(email.getEmail()));
     return this;
   }
 
@@ -140,10 +142,10 @@ public class AuthPage extends AbsBasePage<AuthPage> {
   }
 
   @Step("Проверить отображение Подзаголовок 'Введите пароль'")
-  public AuthPage checkEmailAddress(String email) {
+  public AuthPage checkEmailAddress(MailBox email) {
     assertThat(getText(By.xpath(DESCRIPTION.concat("//span"))))
             .as("Подзаголовок блока не соответсвует")
-            .isEqualTo("Sign in to %s".formatted(email));
+            .isEqualTo("Sign in to %s".formatted(email.getEmail()));
     return this;
   }
 
@@ -161,10 +163,10 @@ public class AuthPage extends AbsBasePage<AuthPage> {
   }
 
   @Step("Ввести пароль (Правильный)")
-  public MailInboxPage sendValidPassword(String pass) {
+  public InboxPage sendValidPassword(String pass) {
     sendPassword(pass);
     clickSubmitButton();
-    return mailInboxPage;
+    return inboxPage;
   }
 
   @Step("Проверить сообщение об ошибке ")

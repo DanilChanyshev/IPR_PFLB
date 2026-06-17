@@ -1,12 +1,14 @@
 package models.mail;
 
+import enums.MailBox;
+
 public class MailBuilder {
 
-  private String to;
+  private MailBox to;
   private String subject;
   private String mail;
 
-  public MailBuilder setTo(String value) {
+  public MailBuilder setTo(MailBox value) {
     this.to = value;
     return this;
   }

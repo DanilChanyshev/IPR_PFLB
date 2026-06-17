@@ -1,9 +1,10 @@
 package main;
 
+import enums.MailBox;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import jakarta.inject.Inject;
+import com.google.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
@@ -13,7 +14,7 @@ import pages.MainPage;
 public class NotValidAuthTest extends BaseTest {
 
   private static final String NAME = "testing";
-  private static final String MAIL = "@mail.ru";
+
   @Inject
   private MainPage mainPage;
 
@@ -24,14 +25,14 @@ public class NotValidAuthTest extends BaseTest {
     mainPage
             .openPage()
             .openEmail()
-            .sendEmail(NAME)
+            .sendEmail(MailBox.ADMIN)
             .checkEnabledSignUpButton()
             .clickSignUp()
-            .checkTitleDontPass(NAME.concat(MAIL))
+            .checkTitleDontPass(MailBox.TEST_USER)
             .checkButtonsSignWithoutPassword()
             .clickSkipButton()
             .checkTitleEnterPassword()
-            .checkEmailAddress(NAME.concat(MAIL))
+            .checkEmailAddress(MailBox.TEST_USER)
             .checkSubmitButtonDissable()
             .sendNotValidPassword("dsadasdasdasdsa")
             .checkErrorMessage();
