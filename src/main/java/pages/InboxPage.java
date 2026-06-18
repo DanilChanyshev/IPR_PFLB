@@ -3,7 +3,6 @@ package pages;
 import annotations.Path;
 import components.ComposeMailModal;
 import components.grids.MailsGrid;
-import enums.MailBox;
 import enums.MailStatus;
 import io.qameta.allure.Step;
 import com.google.inject.Inject;
@@ -19,7 +18,6 @@ public class InboxPage extends AbsBasePage<InboxPage> {
   private static final By INBOX_BAR_CONTENT = By.xpath("//a[@data-folder-link-id = '0']");
   private static final By BUTTON_NEW_LATTER = By.cssSelector(".compose-button ");
   private static final By ACTIVE_NAVIGATION_PROJECT = By.cssSelector(".ph-project__link_current");
-  private static final By COUNT_NEW_MESS_NAV = By.cssSelector(".ph-notify_current");
   private static final By MAIL_ID = By.cssSelector(".llc_new");
   private static final By SENT_TAB = By.xpath("//a[@href = '/sent/?']");
   private static final By TRASH_TAB = By.xpath("//a[@href = '/trash/?']");

@@ -48,16 +48,6 @@ public class Waiter {
     }
   }
 
-  public boolean isDisplayedWaiter(By locator) {
-    try {
-      new WebDriverWait(driver, Duration.ofSeconds(5))
-              .until(ExpectedConditions.visibilityOfElementLocated(locator));
-      return true;
-    } catch (TimeoutException e) {
-      return false;
-    }
-  }
-
   public WebElement clickable(By locator) {
     try {
       return new WebDriverWait(driver, time)
@@ -65,17 +55,6 @@ public class Waiter {
     } catch (TimeoutException e) {
       throw new AssertionError(
               "Элемент не кликабельный\n%s".formatted(e)
-      );
-    }
-  }
-
-  public boolean invisible(By locator) {
-    try {
-      return new WebDriverWait(driver, time)
-              .until(ExpectedConditions.invisibilityOfElementLocated(locator));
-    } catch (TimeoutException e) {
-      throw new AssertionError(
-              "Элемент виден на странице\n%s".formatted(e)
       );
     }
   }

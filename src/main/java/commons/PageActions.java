@@ -75,10 +75,6 @@ public class PageActions extends AbsCommon {
             .isEqualTo(text);
   }
 
-  protected boolean isDisplayed(By selector) {
-    return waiter.isDisplayedWaiter(selector);
-  }
-
   protected void switchToFrame(By selector) {
     driver.switchTo().frame(driver.findElement(selector));
   }
