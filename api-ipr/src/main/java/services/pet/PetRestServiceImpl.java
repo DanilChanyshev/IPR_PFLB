@@ -45,12 +45,12 @@ public class PetRestServiceImpl extends BaseRestService implements PetRestServic
 
   @Override
   @Step("Поиск питомцев по его id")
-  public ValidatableResponse findPetById(int id) {
+  public ValidatableResponse findPetById(long petId) {
 
     String uri = uriBuilder
             .builder()
             .baseUrl(PET_ENDPOINT)
-            .pathSegment(String.valueOf(id))
+            .pathSegment(String.valueOf(petId))
             .build();
 
     return get(uri);
@@ -58,12 +58,12 @@ public class PetRestServiceImpl extends BaseRestService implements PetRestServic
 
   @Override
   @Step("Удалить питомца из списков")
-  public ValidatableResponse deletePet(int id) {
+  public ValidatableResponse deletePet(long petId) {
 
     String uri = uriBuilder
             .builder()
             .baseUrl(PET_ENDPOINT)
-            .pathSegment(String.valueOf(id))
+            .pathSegment(String.valueOf(petId))
             .build();
 
     return delete(uri);
@@ -71,7 +71,7 @@ public class PetRestServiceImpl extends BaseRestService implements PetRestServic
 
   @Override
   @Step("Обновить информацию о питомце в магазине")
-  public ValidatableResponse updatePetInTheStore(int id, String name, String status) {
+  public ValidatableResponse updatePetInTheStore(long petId, String name, String status) {
 
     Map<String, String> params = new HashMap<>();
     params.put(NAME, name);
@@ -80,7 +80,7 @@ public class PetRestServiceImpl extends BaseRestService implements PetRestServic
     String uri = uriBuilder
             .builder()
             .baseUrl(PET_ENDPOINT)
-            .pathSegment(String.valueOf(id))
+            .pathSegment(String.valueOf(petId))
             .build();
 
     return post(uri, params);

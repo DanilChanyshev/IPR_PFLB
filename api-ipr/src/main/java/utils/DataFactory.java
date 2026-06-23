@@ -13,25 +13,29 @@ import java.util.UUID;
 public class DataFactory {
 
   public PetDTO createRandomPet() {
+    Random random = new Random();
     return PetDTO.builder()
-            .id(Integer.parseInt(UUID.randomUUID().toString()))
-            .categoryDTO(Category.CAT.toDto())
-            .name("Pet_".concat(UUID.randomUUID().toString()))
-            .photoUrls(List.of(""))
-            .tagDTOS(List.of(Tags.BLACK.toDto(), Tags.SMALL.toDto()))
-            .status(PetStatuses.AVAILABLE.getEngStatus())
+            .id(random.nextInt(100000))
+            .category(Category.CAT.toDto())
+            .name("Pet_" + UUID.randomUUID())
+            .photoUrls(List.of("photo"))
+            .tags(List.of(
+                    Tags.BLACK.toDto(),
+                    Tags.SMALL.toDto())
+            )
+            .status(PetStatuses.PENDING.getEngStatus())
             .build();
   }
 
   public UserDTO createRandomUser() {
-    Random random = new Random(100);
+    int random = new Random().nextInt(100000);
     return UserDTO.builder()
-            .id(Integer.parseInt(UUID.randomUUID().toString()))
+            .id(random)
             .username("user_" + random)
             .firstName("firstname_" + random)
             .lastName("lastname_" + random)
             .email("testapi" + random + "@mail.ru")
-            .password(random.toString())
+            .password(String.valueOf(random))
             .phone("+79000000000")
             .userStatus(1)
             .build();

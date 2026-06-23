@@ -49,7 +49,7 @@ public class StoreRestServiceImpl extends BaseRestService implements StoreRestSe
   }
 
   @Override
-  @Step("удалить заказ по id")
+  @Step("Удалить заказ по id")
   public ValidatableResponse deleteOrderById(int orderId) {
 
     String uri = uriBuilder.builder()

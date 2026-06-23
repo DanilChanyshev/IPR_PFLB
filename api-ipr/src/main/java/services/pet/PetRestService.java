@@ -17,11 +17,11 @@ public interface PetRestService {
   ValidatableResponse findPetByStatus(PetStatuses status);
 
   @Step("Поиск питомцев по его id")
-  ValidatableResponse findPetById(int id);
+  ValidatableResponse findPetById(long id);
 
   @Step("Удалить питомца из списков")
-  ValidatableResponse deletePet(int id);
+  ValidatableResponse deletePet(long id);
 
   @Step("Обновить информацию о питомце в магазине")
-  ValidatableResponse updatePetInTheStore(int id, String name, String status);
+  ValidatableResponse updatePetInTheStore(long id, String name, String status);
 }

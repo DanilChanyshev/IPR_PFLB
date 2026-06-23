@@ -15,6 +15,6 @@ public interface StoreRestService {
   @Step("Поиск заказа по id")
   ValidatableResponse getOrderById(int orderId);
 
-  @Step("удалить заказ по id")
+  @Step("Удалить заказ по id")
   ValidatableResponse deleteOrderById(int orderId);
 }
