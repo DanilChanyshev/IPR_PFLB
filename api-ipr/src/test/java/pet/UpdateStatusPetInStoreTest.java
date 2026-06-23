@@ -4,6 +4,7 @@ import base.BaseApiTest;
 import com.google.inject.Inject;
 import dto.pet.PetDTO;
 import enums.PetStatuses;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -34,19 +35,25 @@ public class UpdateStatusPetInStoreTest extends BaseApiTest {
             .extract()
             .as(PetDTO.class);
 
-    List<PetDTO> pets = petRestService
-            .findPetByStatus(PetStatuses.PENDING)
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-            .as(new TypeRef<List<PetDTO>>() {
-            });
+    Allure.step(
+            "Проверка, что запись о питомце появилась в справочнике",
+            () -> {
+              List<PetDTO> pets = petRestService
+                      .findPetByStatus(PetStatuses.PENDING)
+                      .statusCode(HttpStatus.SC_OK)
+                      .extract()
+                      .as(new TypeRef<List<PetDTO>>() {
+                      });
 
-    boolean firstEquals = pets.stream()
-            .anyMatch(e -> e.getId() == myPet.getId()
-                    && e.getName().equals(myPet.getName()));
+              boolean firstEquals = pets.stream()
+                      .anyMatch(e -> e.getId() == myPet.getId()
+                              && e.getName().equals(myPet.getName()));
 
-    Assertions.assertTrue(firstEquals,
-            "В списке питомцев со статусом - %s не найдено питомца с id - %s".formatted(PetStatuses.PENDING.getRuStatus(), myPet.getId())
+              Assertions.assertTrue(firstEquals,
+                      "В списке питомцев со статусом - %s не найдено питомца с id - %s".formatted(PetStatuses.PENDING.getRuStatus(), myPet.getId())
+              );
+              return pets;
+            }
     );
 
     myPet.setStatus(PetStatuses.SOLD.getEngStatus());
@@ -54,19 +61,24 @@ public class UpdateStatusPetInStoreTest extends BaseApiTest {
             .updatePet(myPet)
             .statusCode(HttpStatus.SC_OK);
 
-    pets = petRestService
-            .findPetByStatus(PetStatuses.PENDING)
-            .statusCode(HttpStatus.SC_OK)
-            .extract()
-            .as(new TypeRef<List<PetDTO>>() {
-            });
+    Allure.step(
+            "Проверка, что запись о питомце отсутствует в справочнике",
+            () -> {
+              List<PetDTO> pets = petRestService
+                      .findPetByStatus(PetStatuses.PENDING)
+                      .statusCode(HttpStatus.SC_OK)
+                      .extract()
+                      .as(new TypeRef<List<PetDTO>>() {
+                      });
 
-    boolean secondEquals = pets.stream()
-            .anyMatch(e -> e.getId() == myPet.getId()
-                    && e.getName().equals(myPet.getName()));
+              boolean secondEquals = pets.stream()
+                      .anyMatch(e -> e.getId() == myPet.getId()
+                              && e.getName().equals(myPet.getName()));
 
-    Assertions.assertFalse(secondEquals,
-            "В списке питомцев со статусом - %s найден питомец с id - %s".formatted(PetStatuses.PENDING.getRuStatus(), myPet.getId())
+              Assertions.assertFalse(secondEquals,
+                      "В списке питомцев со статусом - %s найден питомец с id - %s".formatted(PetStatuses.PENDING.getRuStatus(), myPet.getId())
+              );
+            }
     );
   }
 }

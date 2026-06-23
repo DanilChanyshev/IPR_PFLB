@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TagDTO {
 
-  private int id;
+  private long id;
   private String name;
 }
