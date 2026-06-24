@@ -1,15 +1,16 @@
-package main;
+package main.auth;
 
 import com.google.inject.Inject;
 import enums.MailBox;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import main.base.BaseTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
 
-@Epic("Mail.ru")
+@Epic("Ui")
 @Feature("Авторизация")
 public class CheckElementsAuthTest extends BaseTest {
 

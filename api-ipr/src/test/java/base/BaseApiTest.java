@@ -7,8 +7,11 @@ import config.RestServiceConfig;
 import module.ApiModule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import utils.DataFactory;
 
+@Execution(ExecutionMode.CONCURRENT)
 public abstract class BaseApiTest {
 
   @Inject

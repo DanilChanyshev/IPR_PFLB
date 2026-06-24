@@ -1,4 +1,4 @@
-package main;
+package main.base;
 
 import extension.UiExtension;
 import org.junit.jupiter.api.extension.ExtendWith;

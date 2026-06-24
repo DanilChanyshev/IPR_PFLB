@@ -7,7 +7,7 @@
 - Java 21
 - Selenium WebDriver
 - JUnit 5
-- Guice
+- Google Guice
 - Allure Report
 - Maven
 - AssertJ

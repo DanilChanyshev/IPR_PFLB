@@ -79,7 +79,7 @@ public class CreateListUsersTest extends BaseApiTest {
                       .extract()
                       .as(UserDTO.class);
 
-              Assertions.assertEquals(updaterUser.getLastName(), update,
+              Assertions.assertEquals(update.getLastName(), "update",
                       "Изменения не были применены");
             }
     );

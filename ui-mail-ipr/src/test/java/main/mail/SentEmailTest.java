@@ -1,4 +1,4 @@
-package main;
+package main.mail;
 
 import com.google.inject.Inject;
 import enums.MailBox;
@@ -6,6 +6,7 @@ import enums.MailStatus;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import main.base.BaseTest;
 import models.MailboxState;
 import models.mail.Mail;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +15,8 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import pages.InboxPage;
 import pages.MainPage;
 
-@Epic("Mail.ru")
-@Feature("Отправка писем")
+@Epic("Ui")
+@Feature("Работа с письмами")
 @ResourceLock("CREATE_LETTER")
 public class SentEmailTest extends BaseTest {
 
