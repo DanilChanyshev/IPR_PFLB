@@ -1,6 +1,5 @@
 package components;
 
-import enums.MailBox;
 import io.qameta.allure.Step;
 import models.mail.Mail;
 import org.assertj.core.api.Assertions;
@@ -75,8 +74,8 @@ public class ComposeMailModal extends AbsComponent {
   }
 
   @Step("Заполнить поле 'Кому'")
-  public ComposeMailModal sendToField(final MailBox value) {
-    sendKeys(TO_INPUT, value.getEmail());
+  public ComposeMailModal sendToField(final String value) {
+    sendKeys(TO_INPUT, value);
     return this;
   }
 

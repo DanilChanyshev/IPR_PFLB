@@ -35,7 +35,7 @@ public class SentPage extends AbsBasePage<SentPage> {
   }
 
   @Step("Проверить отправителя последнего пришедшего письма")
-  public SentPage checkFromSender(MailBox user) {
+  public SentPage checkFromSender(String user) {
     mailsGrid.checkFromSent(user);
     return this;
   }

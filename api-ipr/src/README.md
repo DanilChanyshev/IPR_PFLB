@@ -103,11 +103,7 @@ allure serve target/allure-results
 ```properties
 junit.jupiter.execution.parallel.enabled = true
 junit.jupiter.execution.parallel.mode.default = concurrent
-junit.jupiter.execution.parallel.mode.classes.default = same_thread
+junit.jupiter.execution.parallel.mode.classes.default = concurrent
 junit.jupiter.execution.parallel.config.strategy = fixed
 junit.jupiter.execution.parallel.config.fixed.parallelism = 4
 ```
-
-## Автор
-
-Danil Chanyshev

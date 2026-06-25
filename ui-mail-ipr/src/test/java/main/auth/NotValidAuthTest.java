@@ -14,6 +14,9 @@ import pages.MainPage;
 @Feature("Авторизация")
 public class NotValidAuthTest extends BaseTest {
 
+  private static final String LOGIN = System.getProperty("testEmail");
+  private static final String FULL_LOGIN = LOGIN.concat(MailBox.MAIL_RU.getEmail());
+
   @Inject
   private MainPage mainPage;
 
@@ -24,14 +27,14 @@ public class NotValidAuthTest extends BaseTest {
     mainPage
             .openPage()
             .openEmail()
-            .sendEmail(MailBox.ADMIN)
+            .sendEmail(LOGIN)
             .checkEnabledSignUpButton()
             .clickSignUp()
-            .checkTitleDontPass(MailBox.ADMIN)
+            .checkTitleDontPass(FULL_LOGIN)
             .checkButtonsSignWithoutPassword()
             .clickSkipButton()
             .checkTitleEnterPassword()
-            .checkEmailAddress(MailBox.ADMIN)
+            .checkEmailAddress(FULL_LOGIN)
             .checkSubmitButtonDissable()
             .sendNotValidPassword("dsadasdasdasdsa")
             .checkErrorMessage();

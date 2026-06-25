@@ -60,11 +60,11 @@ public class MailsGrid extends AbsComponent {
   }
 
   @Step("Проверить заголовок письма")
-  public void checkFromSent(MailBox user) {
+  public void checkFromSent(String user) {
     WebElement element = getLastNewRow().findElement(By.cssSelector(SENDER));
     Assertions.assertThat(element.getText())
             .as("Отправитель не совпадает")
-            .isEqualTo(user.getEmail());
+            .isEqualTo(user);
   }
 
   @Step("Проверить что грид пустой")

@@ -4,11 +4,11 @@ import enums.MailBox;
 
 public class MailBuilder {
 
-  private MailBox to;
+  private String to;
   private String subject;
   private String mail;
 
-  public MailBuilder setTo(MailBox value) {
+  public MailBuilder setTo(String value) {
     this.to = value;
     return this;
   }

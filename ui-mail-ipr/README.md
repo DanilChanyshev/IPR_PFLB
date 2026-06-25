@@ -17,7 +17,7 @@
 ### Все тесты
 
 ```bash
-mvn clean test
+mvn clean test -DtestEmail=mylogin -DpasswordEmail=myPassword
 ```
 
 ### Конкретный тест
@@ -93,7 +93,3 @@ junit.jupiter.execution.parallel.mode.classes.default = same_thread
 junit.jupiter.execution.parallel.config.strategy = fixed
 junit.jupiter.execution.parallel.config.fixed.parallelism = 4
 ```
-
-## Автор
-
-Danil Chanyshev

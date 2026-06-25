@@ -18,9 +18,11 @@ import pages.MainPage;
 @Feature("Работа с письмами")
 public class CreateDraftTest extends BaseTest {
 
+  private static final String LOGIN = System.getProperty("testEmail");
   private static final String PASS = System.getProperty("passwordEmail");
   private static final String SUBJECT = "Test Delete Message";
   private static final String TEXT = "Я Удалю это письмо";
+  private static final String FULL_LOGIN = LOGIN.concat(MailBox.MAIL_RU.getEmail());
 
   @Inject
   private MainPage mainPage;
@@ -38,7 +40,7 @@ public class CreateDraftTest extends BaseTest {
     mainPage
             .openPage()
             .openEmail()
-            .sendEmail(MailBox.TEST_USER)
+            .sendEmail(LOGIN)
             .clickSaveUserCheckBox()
             .clickSignUp()
             .clickSkipButton()
@@ -48,7 +50,7 @@ public class CreateDraftTest extends BaseTest {
             .clickNewLatter()
             .sendLetter(
                     Mail.builder()
-                            .setTo(MailBox.TEST_USER)
+                            .setTo(FULL_LOGIN)
                             .setSubject(SUBJECT)
                             .setMail(TEXT)
                             .build()
@@ -63,7 +65,7 @@ public class CreateDraftTest extends BaseTest {
             .clickNewLatter()
             .sendLetter(
                     Mail.builder()
-                            .setTo(MailBox.TEST_USER)
+                            .setTo(FULL_LOGIN)
                             .setSubject(SUBJECT)
                             .setMail(TEXT)
                             .build()

@@ -6,7 +6,7 @@ import org.openqa.selenium.remote.AbstractDriverOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChromeSettings implements ISettings {
+public class ChromeSettings implements Settings {
 
   @Override
   public AbstractDriverOptions settings() {

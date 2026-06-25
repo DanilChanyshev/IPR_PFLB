@@ -20,9 +20,11 @@ import pages.MainPage;
 @ResourceLock("CREATE_LETTER")
 public class SentEmailTest extends BaseTest {
 
+  private static final String LOGIN = System.getProperty("testEmail");
   private static final String PASS = System.getProperty("passwordEmail");
   private static final String SUBJECT = "Testing Message";
   private static final String TEXT = "Я написал это письмо самому себе";
+  private static final String FULL_LOGIN = LOGIN.concat(MailBox.MAIL_RU.getEmail());
 
   @Inject
   private MainPage mainPage;
@@ -39,7 +41,7 @@ public class SentEmailTest extends BaseTest {
     mainPage
             .openPage()
             .openEmail()
-            .sendEmail(MailBox.TEST_USER)
+            .sendEmail(LOGIN)
             .clickSaveUserCheckBox()
             .clickSignUp()
             .clickSkipButton()
@@ -49,7 +51,7 @@ public class SentEmailTest extends BaseTest {
             .clickNewLatter()
             .sendLetter(
                     Mail.builder()
-                            .setTo(MailBox.TEST_USER)
+                            .setTo(FULL_LOGIN)
                             .setSubject(SUBJECT)
                             .setMail(TEXT)
                             .build()
@@ -69,7 +71,7 @@ public class SentEmailTest extends BaseTest {
     inboxPage
             .checkStatusLastMail(MailStatus.READ)
             .clickSentTable()
-            .checkFromSender(MailBox.TEST_USER)
+            .checkFromSender(FULL_LOGIN)
             .checkSubjectLastMail(SUBJECT)
             .checkStatusLastMail(MailStatus.READ)
             .clickLastMail()
