@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class InboxPage extends AbsBasePage<InboxPage> {
 
   private static final By INBOX_BAR_CONTENT = By.xpath("//a[@data-folder-link-id = '0']");
+  private static final By AD_WINDOW_CLOSE_BTN = By.xpath("(//div[@dir = 'ltr']//button)[2]");
   private static final By BUTTON_NEW_LATTER = By.cssSelector(".compose-button ");
   private static final By ACTIVE_NAVIGATION_PROJECT = By.cssSelector(".ph-project__link_current");
   private static final By MAIL_ID = By.cssSelector(".llc_new");
@@ -46,6 +47,14 @@ public class InboxPage extends AbsBasePage<InboxPage> {
     assertThat(getText(ACTIVE_NAVIGATION_PROJECT))
             .as("Выбран раздел %s, а ожидалось %s".formatted(getText(ACTIVE_NAVIGATION_PROJECT), "Почта"))
             .contains("Почта");
+    return this;
+  }
+
+  @Step("Если открылся рекламный банер - закрываем")
+  public InboxPage closeAdWindow() {
+      if (isDisplayed(AD_WINDOW_CLOSE_BTN)) {
+        click(AD_WINDOW_CLOSE_BTN);
+      }
     return this;
   }
 

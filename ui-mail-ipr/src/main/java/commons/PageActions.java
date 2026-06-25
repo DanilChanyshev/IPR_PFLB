@@ -32,6 +32,10 @@ public class PageActions extends AbsCommon {
     return waiter.visible(selector);
   }
 
+  protected boolean isDisplayed(By selector) {
+    return waiter.isDisplayed(selector);
+  }
+
   protected WebElement isEnable(By selector) {
     return waiter.enabled(selector);
   }

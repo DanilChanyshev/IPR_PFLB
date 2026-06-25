@@ -48,6 +48,16 @@ public class Waiter {
     }
   }
 
+  public boolean isDisplayed(By locator) {
+    try {
+      return new WebDriverWait(driver, time)
+              .until(ExpectedConditions.visibilityOfElementLocated(locator))
+              .isDisplayed();
+    } catch (TimeoutException e) {
+      return false;
+    }
+  }
+
   public WebElement clickable(By locator) {
     try {
       return new WebDriverWait(driver, time)

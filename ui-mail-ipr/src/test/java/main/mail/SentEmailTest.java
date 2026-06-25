@@ -48,6 +48,7 @@ public class SentEmailTest extends BaseTest {
             .sendValidPassword(PASS)
             .checkOpenPage()
             .setInboxMessage(mailboxState)
+            .closeAdWindow()
             .clickNewLatter()
             .sendLetter(
                     Mail.builder()
