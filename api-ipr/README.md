@@ -88,16 +88,10 @@ mvn -Dtest=PetLifeCycleTest test
 
 ## Отчеты Allure
 
-### Генерация результатов:
+### Allure отчет данного модуля:
 
 ```bash
-mvn clean test
-```
-
-### Построение отчета:
-
-```bash
-allure serve target/allure-results
+allure serve api-ipr/target/allure-results
 ```
 
 ## Параллельный запуск

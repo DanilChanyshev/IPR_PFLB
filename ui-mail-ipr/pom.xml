@@ -14,11 +14,6 @@
     <artifactId>ui-mail-ipr</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <selenium.version>4.44.0</selenium.version>
-        <webdrivermanager.version>6.3.4</webdrivermanager.version>
-    </properties>
-
     <dependencies>
 
         <dependency>

@@ -11,23 +11,32 @@
 - Allure Report
 - Maven
 - AssertJ
+- Rest Assured
+- Jackson
+- JSON Schema Validator
 
 ## Запуск тестов
-
-### Все тесты
 
 ### Перед запуском тестов
 
 Внесите данные аккаунта в maven.config
 
+### Все тесты
+
 ```bash
 mvn clean test
 ```
 
-### Тесты только этого модуля
+### Тесты только модуля UI
 
 ```bash
 mvn -pl ui-mail-ipr test
+```
+
+### Тесты только модуля API
+
+```bash
+mvn -pl api-ipr test
 ```
 
 ### Конкретный тест
@@ -36,59 +45,25 @@ mvn -pl ui-mail-ipr test
 mvn -Dtest=SentEmailTest test
 ```
 
-## Генерация Allure отчета данного модуля
+## Генерация Allure отчета
+
+### Общий allure отчет
+
+```bash
+allure serve ui-mail-ipr/target/allure-results api-ipr/target/allure-results
+```
+
+### Allure отчет для UI
 
 ```bash
 allure serve ui-mail-ipr/target/allure-results
 ```
 
-## Конфигурация
+### Allure отчет для API
 
-Параметры браузера находятся в:
-
-```text
-factory/settings
+```bash
+allure serve api-ipr/target/allure-results
 ```
-
-Пример:
-
-```java
-ChromeSettings
-```
-
-### Pages
-
-Содержат Page Object классы.
-
-Пример:
-
-```java
-AuthPage,
-InboxPage,
-MailPage
-        ...
-```
-
-### Components
-
-Переиспользуемые UI-компоненты.
-
-### Modules
-
-Guice-модули для внедрения зависимостей.
-
-### Extension
-
-JUnit расширения:
-
-```java
-UiExtension
-```
-
-Отвечает за:
-- создание WebDriver
-- внедрение зависимостей через Guice
-- закрытие браузера
 
 ## Параллельный запуск
 
