@@ -7,10 +7,10 @@ on:
 
     paths:
       - 'api-ipr/**'
-      - 'api-ipr/pom.xml'
+      - 'pom.xml'
       - '.github/workflows/api-tests.yml'
 
-    workflow_dispatch:
+workflow_dispatch:
 
 jobs:
   api-test:
