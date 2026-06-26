@@ -5,6 +5,13 @@ on:
     branches:
       - develop
 
+    paths:
+      - 'api-ipr/**'
+      - 'api-ipr/pom.xml'
+      - '.github/workflows/api-tests.yml'
+
+    workflow_dispatch:
+
 jobs:
   api-test:
     runs-on: ubuntu-latest
@@ -19,7 +26,23 @@ jobs:
           java-version: '21'
           cache: maven
       - run: java --version
+
       - name: Check maven version
         run: mvn --version
+
       - name: Run Api test's
         run: mvn -pl api-ipr test
+
+      - name: Upload surefire artifact's
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: surefire artifact
+          path: api-ipr/target/surefire-reports
+
+      - name: Upload allure artifact's
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: allure-results
+          path: api-ipr/target/allure-results
