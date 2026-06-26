@@ -38,8 +38,8 @@
         <base.url>https://mail.ru</base.url>
         <base.api.url>https://petstore.swagger.io/v2/</base.api.url>
         <browser>chrome</browser>
-        <testEmail></testEmail>
-        <passwordEmail></passwordEmail>
+        <testEmail>${testEmail}</testEmail>
+        <passwordEmail>${passwordEmail}</passwordEmail>
     </properties>
 
     <dependencyManagement>
