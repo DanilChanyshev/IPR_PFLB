@@ -17,13 +17,19 @@
 ### Все тесты
 
 ```bash
-mvn clean test -DtestEmail=mylogin -DpasswordEmail=myPassword
+mvn -DtestEmail=mylogin -DpasswordEmail=myPassword clean test
+```
+
+### Тесты только этого модуля
+
+```bash
+mvn -DtestEmail=mylogin -DpasswordEmail=myPassword -pl ui-mail-ipr test
 ```
 
 ### Конкретный тест
 
 ```bash
-mvn test -Dtest=SentEmailTest
+mvn -Dtest=SentEmailTest -DtestEmail=mylogin -DpasswordEmail=myPassword test
 ```
 
 ## Генерация Allure отчета

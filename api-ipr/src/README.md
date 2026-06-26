@@ -53,13 +53,19 @@
 
 ## Запуск тестов
 
-Запуск всех тестов:
+### Запуск всех тестов:
 
 ```bash
 mvn clean test
 ```
 
-Запуск конкретного класса:
+### Тесты только этого модуля
+
+```bash
+mvn -pl api-ipr test
+```
+
+### Запуск конкретного класса:
 
 ```bash
 mvn -Dtest=PetLifeCycleTest test
@@ -82,13 +88,13 @@ mvn -Dtest=PetLifeCycleTest test
 
 ## Отчеты Allure
 
-Генерация результатов:
+### Генерация результатов:
 
 ```bash
 mvn clean test
 ```
 
-Построение отчета:
+### Построение отчета:
 
 ```bash
 allure serve target/allure-results
@@ -98,7 +104,7 @@ allure serve target/allure-results
 
 В проекте используется JUnit 5 Parallel Execution.
 
-Настройки:
+### Настройки:
 
 ```properties
 junit.jupiter.execution.parallel.enabled = true
