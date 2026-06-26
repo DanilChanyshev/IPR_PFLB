@@ -17,4 +17,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          cache: maven
       - run: java --version
+      - name: Check maven version
+        run: mvn --version
+      - name: Run Api test's
+        run: mvn -pl api-ipr test
