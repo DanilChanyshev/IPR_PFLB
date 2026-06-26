@@ -11,7 +11,7 @@ public class ChromeSettings implements Settings {
   @Override
   public AbstractDriverOptions settings() {
     ChromeOptions chromeOptions = new ChromeOptions();
-    chromeOptions.addArguments("--start-maximized");
+    chromeOptions.addArguments("--window-size=1920,1080");
     chromeOptions.addArguments("--disable-notifications");
     Map<String, Object> prefs = new HashMap<>();
     prefs.put("credentials_enable_service", false);

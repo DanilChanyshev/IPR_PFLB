@@ -107,3 +107,7 @@ junit.jupiter.execution.parallel.mode.classes.default = concurrent
 junit.jupiter.execution.parallel.config.strategy = fixed
 junit.jupiter.execution.parallel.config.fixed.parallelism = 4
 ```
+
+## Примечание
+
+Для корректной работы со Swagger Pet-store - рекомендуется включить VPN.
