@@ -31,14 +31,14 @@ jobs:
         run: mvn --version
 
   run_api_tests:
-    needs: [load workspace]
+    needs: [load_workspace]
     runs-on: ubuntu-latest
     steps:
       - name: Run Api test's
         run: mvn -pl api-ipr test
 
   upload_artifacts:
-    needs: [run api test's]
+    needs: [run_api_tests]
     runs-on: ubuntu-latest
     steps:
       - name: Upload surefire artifact's
