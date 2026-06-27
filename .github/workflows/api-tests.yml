@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  load workspace:
+  load_workspace:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,14 +30,14 @@ jobs:
       - name: Check maven version
         run: mvn --version
 
-  run api test's:
+  run_api_test's:
     needs: [load workspace]
     runs-on: ubuntu-latest
     steps:
       - name: Run Api test's
         run: mvn -pl api-ipr test
 
-  upload artifact's:
+  upload_artifact's:
     needs: [run api test's]
     runs-on: ubuntu-latest
     steps:
