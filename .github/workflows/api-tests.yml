@@ -30,11 +30,9 @@ jobs:
       - name: Check maven version
         run: mvn --version
 
-    steps:
       - name: Run Api test's
         run: mvn -pl api-ipr test
 
-    steps:
       - name: Upload surefire artifacts
         uses: actions/upload-artifact@v7
         if: always()
