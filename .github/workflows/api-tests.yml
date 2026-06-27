@@ -30,14 +30,14 @@ jobs:
       - name: Check maven version
         run: mvn --version
 
-  run_api_test's:
+  run_api_tests:
     needs: [load workspace]
     runs-on: ubuntu-latest
     steps:
       - name: Run Api test's
         run: mvn -pl api-ipr test
 
-  upload_artifact's:
+  upload_artifacts:
     needs: [run api test's]
     runs-on: ubuntu-latest
     steps:
