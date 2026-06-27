@@ -30,25 +30,19 @@ jobs:
       - name: Check maven version
         run: mvn --version
 
-  run_api_tests:
-    needs: [load_workspace]
-    runs-on: ubuntu-latest
     steps:
       - name: Run Api test's
         run: mvn -pl api-ipr test
 
-  upload_artifacts:
-    needs: [run_api_tests]
-    runs-on: ubuntu-latest
     steps:
-      - name: Upload surefire artifact's
+      - name: Upload surefire artifacts
         uses: actions/upload-artifact@v7
         if: always()
         with:
           name: surefire artifact
           path: api-ipr/target/surefire-reports
 
-      - name: Upload allure artifact's
+      - name: Upload allure artifacts
         uses: actions/upload-artifact@v7
         if: always()
         with:
