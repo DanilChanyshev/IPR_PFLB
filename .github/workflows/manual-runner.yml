@@ -25,6 +25,7 @@ on:
 jobs:
   ui_tests:
     if: ${{ github.event.inputs.suite == 'ui' || github.event.inputs.suite == 'all' }}
+    name: Run UI tests
     runs-on: ubuntu-latest
 
     env:
