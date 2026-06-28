@@ -1,0 +1,64 @@
+name: UI Mail Tests
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - develop
+      -
+    paths:
+      - 'ui-mail-ipr/**'
+      - 'pom.xml'
+      - '.github/workflows/ui-tests.yml'
+
+  workflow_dispatch:
+
+jobs:
+  ui_tests:
+    runs-on: ubuntu-latest
+
+    env:
+      TEST_EMAIL: ${{ secrets.TEST_MAIL }}
+      PASSWORD_EMAIL: ${{ secrets.MAIL_PASS }}
+
+    steps:
+      # Получаем код проекта
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      # Устанавливаем Java
+      - name: Set up Java 21
+        uses: ./.github/actions/setup_java
+
+      # Проверяем наличие Chrome
+      - name: Check Chrome
+        run: |
+          google-chrome --version || chromium-browser --version || true
+      # Проверяем доступность Mail.ru
+      - name: Check Mail.ru
+        run: curl -I https://mail.ru
+
+      # Запускаем UI тесты
+      - name: Run UI Tests
+        run: |
+          mvn -pl ui-mail-ipr test \
+            -Dheadless=true \
+            -DtestEmail=$TEST_EMAIL \
+            -DpasswordEmail=$PASSWORD_EMAIL
+
+      # Загружаем surefire
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ui-surefire-reports
+          path: ui-mail-ipr/target/surefire-reports
+
+      # Загружаем allure-results
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ui-allure-results
+          path: ui-mail-ipr/target/allure-results

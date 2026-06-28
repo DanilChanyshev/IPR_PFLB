@@ -18,6 +18,13 @@ public class ChromeSettings implements Settings {
     prefs.put("profile.password_manager_enabled", false);
     prefs.put("profile.default_content_setting_values.notifications", 2);
     chromeOptions.setExperimentalOption("prefs", prefs);
+
+    if (Boolean.parseBoolean(System.getProperty("headless", "false"))) {
+      chromeOptions.addArguments("--headless=new");
+      chromeOptions.addArguments("--no-sandbox");
+      chromeOptions.addArguments("--disable-dev-shm-usage");
+    }
+
     return chromeOptions;
   }
 }
