@@ -76,6 +76,15 @@ jobs:
             cp -R gh-pages/history/* allure-results/history/
           fi
 
+      - name: Diagnose Allure
+        run: |
+          echo "TEST STATUS"
+          echo $?
+          echo "ALLURE DIR"
+          ls -R api-ipr/target || true
+          echo "SEARCH RESULTS"
+          find . -name "*result.json" || true
+
       - name: Generate allure report
         run: allure generate -c allure-results --clean -o _site
 
