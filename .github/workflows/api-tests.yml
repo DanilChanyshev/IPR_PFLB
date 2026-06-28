@@ -62,7 +62,8 @@ jobs:
       - name: Set up Java -v 21
         uses: ./.github/actions/setup_java
 
-      - uses: ./.github/actions/install_allure
+      - name: Install Allure
+        uses: ./.github/actions/install_allure
 
       - name: Download artifacts
         uses: actions/download-artifact@v8
