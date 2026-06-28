@@ -60,7 +60,11 @@ jobs:
     name: Generate allure report
     steps:
       - name: Set up Java -v 21
-        uses: ./.github/actions/setup_java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - run: java --version
 
       - name: Install Allure
         uses: ./.github/actions/install_allure
