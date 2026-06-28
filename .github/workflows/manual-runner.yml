@@ -80,7 +80,7 @@ jobs:
           path: api-ipr/target/allure-results
           retention-days: 3
 
-  generate-api-allure:
+  generate-allure:
     runs-on: ubuntu-latest
     needs: api-test
     name: Generate allure report
