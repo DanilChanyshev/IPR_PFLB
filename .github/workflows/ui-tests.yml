@@ -41,7 +41,7 @@ jobs:
 
       - name: Run UI Tests
         run: |
-          mvn -pl ui-mail-ipr test \
+          mvn -pl ui-mail-ipr clean test \
             -Dheadless=true \
             -DtestEmail=$TEST_EMAIL \
             -DpasswordEmail=$PASSWORD_EMAIL
@@ -88,6 +88,15 @@ jobs:
             mkdir -p allure-results/history
             cp -R gh-pages/history/* allure-results/history/
           fi
+
+      - name: Diagnose Allure
+        run: |
+          echo "TEST STATUS"
+          echo $?
+          echo "ALLURE DIR"
+          ls -R api-ipr/target || true
+          echo "SEARCH RESULTS"
+          find . -name "*result.json" || true
 
       - name: Generate allure report
         run: allure generate -c allure-results --clean -o _site
