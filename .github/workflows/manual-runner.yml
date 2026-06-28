@@ -12,10 +12,10 @@ on:
           - ui
           - api
           - all
-        branch:
-          description: "Branch to run tests from"
-          required: false
-          default: develop
+      branch:
+        description: "Branch to run tests from"
+        equired: false
+        default: develop
 
 jobs:
   ui_tests:

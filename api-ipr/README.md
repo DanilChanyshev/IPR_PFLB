@@ -56,7 +56,7 @@
 ### Запуск всех тестов:
 
 ```bash
-mvn clean test
+mvn -fae clean test // mvn -fae clean test // mvn -fae -DtestEmail=yourAcc DpasswordEmail=yourPass clean test
 ```
 
 ### Тесты только этого модуля

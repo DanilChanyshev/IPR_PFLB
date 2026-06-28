@@ -20,20 +20,26 @@
 
 Внесите данные аккаунта в maven.config
 
+Или для запуска UI тестов добавляйте:
+
 ```bash
-mvn clean test
+-DtestEmail=yourAcc DpasswordEmail=yourPass
+```
+
+```bash
+mvn clean test // mvn -fae -DtestEmail=yourAcc DpasswordEmail=yourPass clean test
 ```
 
 ### Тесты только этого модуля
 
 ```bash
-mvn -pl ui-mail-ipr test
+mvn -pl ui-mail-ipr test // mvn -DtestEmail=yourAcc DpasswordEmail=yourPass clean test
 ```
 
 ### Конкретный тест
 
 ```bash
-mvn -Dtest=SentEmailTest test
+mvn -Dtest=SentEmailTest test // mvn -DtestEmail=yourAcc DpasswordEmail=yourPass -Dtest=SentEmailTest test
 ```
 
 ## Генерация Allure отчета данного модуля
