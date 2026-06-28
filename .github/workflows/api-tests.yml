@@ -16,18 +16,7 @@ on:
       - '.github/workflows/api-tests.yml'
       - '.github/actions/**'
 
-  workflow_dispatch:
-    inputs:
-      deployment-target:
-        description: Choose
-        required: true
-        default: api
-        type: choice
-        options:
-          - api
-
 jobs:
-
   api-test:
     runs-on: ubuntu-latest
     name: Run API tests

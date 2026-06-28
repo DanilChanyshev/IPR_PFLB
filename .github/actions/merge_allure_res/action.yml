@@ -1,0 +1,11 @@
+name: Merge allure results
+
+description: Merge allure results
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        mkdir -p allure-results/merged
+        cp -r allure-results/api/* allure-results/merged/ 2>/dev/null || true
+        cp -r allure-results/ui/* allure-results/merged/ 2>/dev/null || true

@@ -1,22 +1,21 @@
-name: UI Mail Tests
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+name: Manual Test Run (UI + API)
 
 on:
-  push:
-    branches:
-      - develop
-
-    paths:
-      - 'ui-mail-ipr/**'
-      - 'pom.xml'
-      - '.github/workflows/ui-tests.yml'
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: "Test suite to run"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - ui
+          - api
+          - all
 
 jobs:
   ui_tests:
+    if: ${{ github.event.inputs.suite == 'ui' || github.event.inputs.suite == 'all' }}
     runs-on: ubuntu-latest
 
     env:
@@ -49,43 +48,66 @@ jobs:
         uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: allure-results
+          name: allure-results-ui
           path: ui-mail-ipr/target/allure-results
           retention-days: 3
 
-  generate-allure:
+  api-test:
+    if: ${{ github.event.inputs.suite == 'api' || github.event.inputs.suite == 'all' }}
     runs-on: ubuntu-latest
-    needs: ui_tests
-    name: Generate allure report
+    name: Run API tests
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Downlod java
+      - name: Set up Java -v 21
+        uses: ./.github/actions/setup_java
+
+      - name: Run Api test's
+        run: mvn -pl api-ipr test
+        continue-on-error: true
+
+      - name: Upload api allure results
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: allure-results-api
+          path: api-ipr/target/allure-results
+          retention-days: 3
+
+  generate-allure:
+    runs-on: ubuntu-latest
+    needs: [api_tests, ui_tests]
+    name: Generate allure report
+    if: always()
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Download java
         uses: ./.github/actions/setup_java
 
       - name: Install Allure
         uses: ./.github/actions/install_allure
 
-      - name: Download artifacts
+      - name: Download API results
         uses: actions/download-artifact@v8
-        with:
-          name: allure-results
-          path: allure-results
-
-      - name: Checkout gh-pages
-        uses: actions/checkout@v7
-        with:
-          ref: gh-pages
-          path: gh-pages
         continue-on-error: true
+        with:
+          name: allure-results-api
+          path: allure-results/api
 
-      - name: Restore history
-        run: |
-          if [ -d gh-pages/history ]; then
-            mkdir -p allure-results/history
-            cp -R gh-pages/history/* allure-results/history/
-          fi
+      - name: Download UI results
+        uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: allure-results-ui
+          path: allure-results/ui
+
+      - name: Merge results
+        uses: ./.github/actions/merge_allure_res
 
       - name: Generate allure report
         run: allure generate -c allure-results --clean -o _site
@@ -106,6 +128,13 @@ jobs:
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v8
+
+      #      - name: Publish allure
+      #        uses: peaceiris/actions-gh-pages@v4
+      #        with:
+      #          github_token: ${{ secrets.GITHUB_TOKEN }}
+      #          publish_branch: gh-pages
+      #          publish_dir: ./_site
 
       - name: Upload page artifact
         uses: actions/upload-pages-artifact@v3
