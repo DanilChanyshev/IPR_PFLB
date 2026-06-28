@@ -72,6 +72,11 @@ jobs:
         uses: actions/download-artifact@v8
       - run: allure generate -c allure-results -o _site
 
+      - name: Show downloaded files
+        run: |
+          pwd
+          ls -R
+
 #        with:
 #          name: allure-results
 #
