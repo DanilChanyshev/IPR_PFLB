@@ -14,6 +14,7 @@ on:
       - 'api-ipr/**'
       - 'pom.xml'
       - '.github/workflows/api-tests.yml'
+      - '.github/actions/**'
 
   workflow_dispatch:
     inputs:

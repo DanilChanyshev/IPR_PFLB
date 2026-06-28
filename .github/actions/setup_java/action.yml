@@ -12,5 +12,5 @@ runs:
 
     - shell: bash
       run: |
-      java --version
-      mvn --version
+        java --version
+        mvn --version
