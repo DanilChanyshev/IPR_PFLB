@@ -43,7 +43,7 @@ jobs:
       - name: Run UI Tests
         run: |
           mvn -pl ui-mail-ipr test \
-            -Dheadless=false \
+            -Dheadless=true \
             -DtestEmail=$TEST_EMAIL \
             -DpasswordEmail=$PASSWORD_EMAIL
 
