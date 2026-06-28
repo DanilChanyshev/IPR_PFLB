@@ -105,18 +105,19 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v8
 
-#      - name: Publish allure
-#        uses: peaceiris/actions-gh-pages@v4
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_branch: gh-pages
-#          publish_dir: ./_site
-
       - name: Upload page artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+#
+#      - name: Deploy GitHun Page
+#        id: deploy
+#        uses: actions/deploy-pages@v4
 
-      - name: Deploy GitHun Page
-        id: deploy
-        uses: actions/deploy-pages@v4
+      - name: Publish API report
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: _site
+          destination_dir: api
