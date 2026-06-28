@@ -54,7 +54,7 @@ jobs:
 
   generate-allure:
     runs-on: ubuntu-latest
-    needs: api-test
+    needs: ui_tests
     name: Generate allure report
     steps:
       - name: Checkout
