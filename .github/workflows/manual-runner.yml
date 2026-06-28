@@ -48,7 +48,7 @@ jobs:
 
       - name: Run UI Tests
         run: |
-          mvn -pl ui-mail-ipr test \
+          mvn -pl ui-mail-ipr clean test \
             -Dheadless=true \
             -DtestEmail=$TEST_EMAIL \
             -DpasswordEmail=$PASSWORD_EMAIL
@@ -75,7 +75,7 @@ jobs:
         uses: ./.github/actions/setup_java
 
       - name: Run Api test's
-        run: mvn -pl api-ipr test
+        run: mvn -pl api-ipr clean test
         continue-on-error: true
 
       - name: Upload api allure results
@@ -123,6 +123,15 @@ jobs:
 
       - name: Merge results
         uses: ./.github/actions/merge_allure_res
+
+      - name: Diagnose Allure
+        run: |
+          echo "TEST STATUS"
+          echo $?
+          echo "ALLURE DIR"
+          ls -R ui-mail-ipr/target || true
+          echo "SEARCH RESULTS"
+          find . -name "*result.json" || true
 
       - name: Generate allure report
         run: allure generate -c allure-results --clean -o _site
