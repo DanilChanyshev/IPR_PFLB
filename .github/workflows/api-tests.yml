@@ -1,7 +1,7 @@
 name: API PetStore
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -74,7 +74,17 @@ jobs:
 
       - name: Download artifacts
         uses: actions/download-artifact@v8
-      - run: allure generate -c allure-results -o _site
+
+      - name: Restore history
+        run: |
+          if [ -d gh-pages/history ]; then
+            echo "History restored"
+            mkdir -p allure-results/history
+            cp -R gh-pages/history/* allure-results/history/
+          fi
+
+      - name: Generate allure
+        run: allure generate -c allure-results -o _site
 
       - name: Result generate
         uses: actions/upload-artifact@v7
