@@ -65,8 +65,6 @@ jobs:
       - name: Install Allure
         uses: ./.github/actions/install_allure
 
-#      - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
-
       - name: Download artifacts
         uses: actions/download-artifact@v8
         with:
@@ -76,19 +74,16 @@ jobs:
       - name: Generate allure report
         run: allure generate -c allure-results --clean -o _site
 
-#        with:
-#          name: allure-results
-#
-#      - name: Restore history
-#        run: |
-#          if [ -d gh-pages/history ]; then
-#            echo "History restored"
-#            mkdir -p allure-results/history
-#            cp -R gh-pages/history/* allure-results/history/
-#          fi
-#
-#      - name: Generate allure
-#        run: allure generate -c allure-results -o _site
+      - name: Restore history
+        run: |
+          if [ -d gh-pages/history ]; then
+            echo "History restored"
+            mkdir -p allure-results/history
+            cp -R gh-pages/history/* allure-results/history/
+          fi
+
+      - name: Generate allure
+        run: allure generate -c allure-results -o _site
 
       - name: Result generate
         uses: actions/upload-artifact@v7
