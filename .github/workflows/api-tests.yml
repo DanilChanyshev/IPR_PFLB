@@ -70,10 +70,10 @@ jobs:
 
       - name: Download artifacts
         uses: actions/download-artifact@v8
-      - run: allure generate -c allure-results -o _site
         with:
           name: allure-results
           path: allure-results
+      - run: allure generate -c allure-results --clean -o _site
 
       - name: Show downloaded files
         run: |
