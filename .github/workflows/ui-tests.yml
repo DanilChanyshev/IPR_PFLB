@@ -1,0 +1,117 @@
+name: UI Mail Tests
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+on:
+  push:
+    branches:
+      - develop
+
+    paths:
+      - 'ui-mail-ipr/**'
+      - 'pom.xml'
+      - '.github/workflows/ui-tests.yml'
+
+jobs:
+  ui_tests:
+    runs-on: ubuntu-latest
+
+    env:
+      TEST_EMAIL: ${{ secrets.TEST_MAIL }}
+      PASSWORD_EMAIL: ${{ secrets.MAIL_PASS }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Java 21
+        uses: ./.github/actions/setup_java
+
+      - name: Check Chrome
+        run: |
+          google-chrome --version || chromium-browser --version || true
+
+      - name: Check Mail.ru
+        run: curl -I https://mail.ru
+
+      - name: Run UI Tests
+        run: |
+          mvn -pl ui-mail-ipr test \
+            -Dheadless=true \
+            -DtestEmail=$TEST_EMAIL \
+            -DpasswordEmail=$PASSWORD_EMAIL
+        continue-on-error: true
+
+      - name: Upload ui allure results
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: allure-results
+          path: ui-mail-ipr/target/allure-results
+          retention-days: 3
+
+  generate-allure:
+    runs-on: ubuntu-latest
+    needs: ui_tests
+    name: Generate allure report
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Downlod java
+        uses: ./.github/actions/setup_java
+
+      - name: Install Allure
+        uses: ./.github/actions/install_allure
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v7
+        with:
+          ref: gh-pages
+          path: gh-pages
+        continue-on-error: true
+
+      - name: Restore history
+        run: |
+          if [ -d gh-pages/history ]; then
+            mkdir -p allure-results/history
+            cp -R gh-pages/history/* allure-results/history/
+          fi
+
+      - name: Generate allure report
+        run: allure generate -c allure-results --clean -o _site
+
+      - name: Result generate
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: _site
+          path: _site
+          retention-days: 3
+
+  publish-allure-report:
+    runs-on: ubuntu-latest
+    needs: generate-allure
+    name: Publish allure report
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+
+      - name: Upload page artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy GitHun Page
+        id: deploy
+        uses: actions/deploy-pages@v4
