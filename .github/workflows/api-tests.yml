@@ -109,15 +109,15 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-#
-#      - name: Deploy GitHun Page
-#        id: deploy
-#        uses: actions/deploy-pages@v4
 
-      - name: Publish API report
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: _site
-          destination_dir: api
+      - name: Deploy GitHun Page
+        id: deploy
+        uses: actions/deploy-pages@v4
+
+#      - name: Publish API report
+#        uses: peaceiris/actions-gh-pages@v4
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_branch: gh-pages
+#          publish_dir: _site
+#          destination_dir: api

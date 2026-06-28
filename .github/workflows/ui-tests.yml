@@ -94,7 +94,7 @@ jobs:
           echo "TEST STATUS"
           echo $?
           echo "ALLURE DIR"
-          ls -R api-ipr/target || true
+          ls -R ui-mail-ipr/target || true
           echo "SEARCH RESULTS"
           find . -name "*result.json" || true
 
@@ -126,3 +126,11 @@ jobs:
       - name: Deploy GitHun Page
         id: deploy
         uses: actions/deploy-pages@v4
+
+#      - name: Publish UI report
+#        uses: peaceiris/actions-gh-pages@v4
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_branch: gh-pages
+#          publish_dir: _site
+#          destination_dir: ui
