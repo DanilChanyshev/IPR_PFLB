@@ -59,18 +59,17 @@ jobs:
     needs: api-test
     name: Generate allure report
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
+#      - name: Checkout
+#        uses: actions/checkout@v7
 
-      - name: Set up Java -v 21
+      - name: Generate allure
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
       - run: java --version
 
-      - name: Install Allure
-        uses: ./.github/actions/install_allure
+      - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
 
       - name: Download artifacts
         uses: actions/download-artifact@v8
