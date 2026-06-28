@@ -129,7 +129,7 @@ jobs:
           echo "TEST STATUS"
           echo $?
           echo "ALLURE DIR"
-          ls -R ui-mail-ipr/target || true
+          ls -R allure-results/merged/ || true
           echo "SEARCH RESULTS"
           find . -name "*result.json" || true
 
