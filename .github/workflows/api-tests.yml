@@ -16,6 +16,8 @@ on:
       - '.github/workflows/api-tests.yml'
       - '.github/actions/**'
 
+  workflow_dispatch:
+
 jobs:
   api-test:
     runs-on: ubuntu-latest

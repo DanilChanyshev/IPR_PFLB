@@ -1,5 +1,10 @@
 name: Manual Test Run (UI + API)
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -20,6 +25,7 @@ on:
 jobs:
   ui_tests:
     if: ${{ github.event.inputs.suite == 'ui' || github.event.inputs.suite == 'all' }}
+    name: Run UI tests
     runs-on: ubuntu-latest
 
     env:
@@ -109,6 +115,11 @@ jobs:
         with:
           name: allure-results-ui
           path: allure-results/ui
+
+      - name: Create empty dirs if missing
+        run: |
+          mkdir -p allure-results/api
+          mkdir -p allure-results/ui
 
       - name: Merge results
         uses: ./.github/actions/merge_allure_res
