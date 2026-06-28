@@ -31,7 +31,7 @@ jobs:
         uses: ./.github/actions/setup_java
 
       - name: Run Api test's
-        run: mvn -pl api-ipr test
+        run: mvn -pl api-ipr clean test
         continue-on-error: true
 
       - name: Upload api allure results
