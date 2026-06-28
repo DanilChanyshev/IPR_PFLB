@@ -78,7 +78,7 @@ jobs:
 
   generate-allure:
     runs-on: ubuntu-latest
-    needs: [api_tests, ui_tests]
+    needs: [api-test, ui_tests]
     name: Generate allure report
     if: always()
 
