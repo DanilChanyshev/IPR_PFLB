@@ -25,7 +25,6 @@ on:
         options:
           - api
 
-
 jobs:
 
   api-test:
