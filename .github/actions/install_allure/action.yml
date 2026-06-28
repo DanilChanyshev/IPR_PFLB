@@ -1,7 +1,6 @@
 name: Install Allure
 
 description: Install Allure
-
 runs:
   using: composite
   steps:
