@@ -62,8 +62,8 @@ jobs:
       - name: Downlod java
         uses: ./.github/actions/setup_java
 
-     - name: Install Allure
-       uses: ./.github/actions/install_allure
+      - name: Install Allure
+        uses: ./.github/actions/install_allure
 
 #      - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
 
@@ -72,7 +72,9 @@ jobs:
         with:
           name: allure-results
           path: allure-results
-      - run: allure generate -c allure-results --clean -o _site
+
+      - name: Generate allure report
+        run: allure generate -c allure-results --clean -o _site
 
 #        with:
 #          name: allure-results
