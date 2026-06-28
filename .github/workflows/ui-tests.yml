@@ -17,7 +17,7 @@ on:
 
 jobs:
   ui_tests:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     env:
       TEST_EMAIL: ${{ secrets.TEST_MAIL }}
@@ -46,6 +46,13 @@ jobs:
             -Dheadless=true \
             -DtestEmail=$TEST_EMAIL \
             -DpasswordEmail=$PASSWORD_EMAIL
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: ui-mail-ipr/screenshots
 
       # Загружаем surefire
       - name: Upload Surefire Reports
