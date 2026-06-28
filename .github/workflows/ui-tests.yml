@@ -44,19 +44,14 @@ jobs:
             -DtestEmail=$TEST_EMAIL \
             -DpasswordEmail=$PASSWORD_EMAIL
 
-      - name: Upload screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: ui-mail-ipr/screenshots
-
-      - name: Upload Allure Results
-        if: always()
+      - name: Upload ui allure results
         uses: actions/upload-artifact@v7
+        if: always()
         with:
-          name: ui-allure-results
+          name: allure-results
           path: ui-mail-ipr/target/allure-results
+          retention-days: 3
+
 
   generate-allure:
     runs-on: ubuntu-latest
