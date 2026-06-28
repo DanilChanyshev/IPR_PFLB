@@ -97,6 +97,7 @@ jobs:
         uses: ./.github/actions/install_allure
 
       - name: Download API results
+        if: ${{ github.event.inputs.suite == 'api' || github.event.inputs.suite == 'all' }}
         uses: actions/download-artifact@v8
         continue-on-error: true
         with:
@@ -104,6 +105,7 @@ jobs:
           path: allure-results/api
 
       - name: Download UI results
+        if: ${{ github.event.inputs.suite == 'ui' || github.event.inputs.suite == 'all' }}
         uses: actions/download-artifact@v8
         continue-on-error: true
         with:
