@@ -89,6 +89,7 @@ public class AuthPage extends AbsBasePage<AuthPage> {
   public AuthPage clickSignUp() {
     click(BUTTON_SIGN_UP);
     clickCheckboxIAmNotRobot();
+    checkOpenFindPassword();
     return this;
   }
 
@@ -211,5 +212,14 @@ public class AuthPage extends AbsBasePage<AuthPage> {
   private void clickSubmitButton() {
     click(SUBMIT_BUTTON);
     clickCheckboxIAmNotRobot();
+  }
+
+  @Step("Проверить, что открылась страница с вводом пароля")
+  private void checkOpenFindPassword() {
+    try {
+      visible(BUTTON_SKIP);
+    } catch (AssertionError e) {
+      throw new AssertionError("Ошибка авторизации: " + getText(ERROR_MESSAGE), e);
+    }
   }
 }
